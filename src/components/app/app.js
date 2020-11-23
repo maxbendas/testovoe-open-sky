@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 
-import Login from "./Login";
+import Login from "../login/login";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
-import Dashboard from "./Dashboard";
+import Dashboard from "../dashboard/dashboard";
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
     const onLogin = ()=>{
         setIsLoggedIn(true)
     }
