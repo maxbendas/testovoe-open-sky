@@ -1,51 +1,80 @@
-import React from 'react';
-import {List} from "@material-ui/icons";
+import React, {useState} from 'react';
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import List from "@material-ui/core/List";
+import {makeStyles} from "@material-ui/core/styles";
+import {createStyles} from "@material-ui/core";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+
+const useStyles = makeStyles(() =>
+    createStyles({
+        root: {},
+    }),
+);
 
 const AirportList = ({airports}) => {
 
-    const generate = (element)=> {
-        return airports.map((value) =>
-            React.cloneElement(element, {
-                key: {value},
-            }),
-        );
-    }
-    return (
-            <List>
-                {generate(
-                    <ListItem>
-                        <ListItemText
-                            primary="Single-line item"
-                        />
-                    </ListItem>,
-                )}
-            </List>
-        )
+    const classes = useStyles();
 
-    // const items = airports.map((item) => {
-    //     return (
-    //     <ListItem button
-    //         key={item.icao}
-    //         // onClick={() => onItemSelected(id)}
-    //     >
-    //         <ListItemText primary={
-    //             item.name
-    //         }/>
-    //     </ListItem>
-    //     )
-    // })
-    //
-    //
-    //
-    // return (
-    //     <List>
-    //
-    //             {items}
-    //
-    //     </List>
-    // );
+    const [icao, setIcao] = useState(null)
+    const [name, setName] = useState(null)
+    const [openModal, setOpenModal] = useState(false)
+
+
+    const onItemSelected = ({icao, name}) => {
+        setIcao(icao)
+        setName(name)
+        setOpenModal(true)
+        console.log(name, icao)
+    }
+
+    const onClose = () => {
+        setOpenModal(false)
+    }
+
+    const items = airports.map((item) => {
+        return (
+            <ListItem
+                onClick={() => onItemSelected(item)}
+                button
+                key={item.icao}
+            >
+                <ListItemText primary={
+                    item.name
+                }/>
+            </ListItem>
+        )
+    })
+
+    return (
+        <>
+            <List className={classes.root}>
+                {items}
+            </List>
+            <Dialog open={openModal}
+                    onClose={onClose}
+                    fullWidth={true}
+                    maxWidth='lg'
+            >
+                <Container>
+                <Typography>{name}</Typography>
+                <Typography>{icao}</Typography>
+                </Container>
+                <DialogActions>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={onClose}>
+                        Close
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </>
+    );
 }
 
 export default AirportList;
