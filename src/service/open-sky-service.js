@@ -4,27 +4,27 @@ export default class OpenSkyService {
 
     timeEnd = () => {
         return Math.floor(Date.now() / 1000)
-
     }
 
     timeBegin = (timestamp) => {
-        return this.timeEnd() - timestamp * 60*150
+        return this.timeEnd() - 60*timestamp*150
     }
 
     getResource = async url => {
         const res = await fetch(url);
-
         if (!res.ok) {
             throw new Error(`Произошла ошибка ${res.status}`)
         }
-
         return await res.json();
-
     }
 
     getDeparturesByAirport = async (airport, timestamp) =>
         await this.getResource(this.startUrl +
             `/flights/departure?airport=${airport}&begin=${this.timeBegin(timestamp)}&end=${this.timeEnd()}`);
+
+    getArrivalsByAirport = async (airport, timestamp) =>
+        await this.getResource(this.startUrl +
+            `/flights/arrival?airport=${airport}&begin=${this.timeBegin(timestamp)}&end=${this.timeEnd()}`);
 
 }
 

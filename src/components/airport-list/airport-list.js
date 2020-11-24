@@ -9,6 +9,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import Details from "../details/details";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -61,9 +62,10 @@ const AirportList = ({airports}) => {
                     maxWidth='lg'
             >
                 <Container>
-                <Typography>{name}</Typography>
-                <Typography>{icao}</Typography>
+                    <Typography>{name}</Typography>
+                    <Typography>{icao}</Typography>
                 </Container>
+                <Details airport={icao} time={10}/>
                 <DialogActions>
                     <Button
                         variant="contained"
@@ -72,6 +74,7 @@ const AirportList = ({airports}) => {
                         Close
                     </Button>
                 </DialogActions>
+
             </Dialog>
         </>
     );
