@@ -10,6 +10,9 @@ import Select from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
 import {makeStyles} from "@material-ui/core/styles";
 import ErrorMessage from "../errorMessage/errorMessage";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import DetailsTable from "../detailsTable/detailsTable";
 
 const openSkyService = new OpenSkyService()
 
@@ -25,34 +28,32 @@ const useStyles = makeStyles((theme) => ({
 
 const Details = ({airport}) => {
     const classes = useStyles();
-    console.log(airport)
-    const [data, setData] = useState([])
+    const [departureData, setDepartureData] = useState([])
+    const [arrivalData, setArrivalData] = useState([])
     const [time, setTime] = useState(10)
     const [error, setError] = useState(10)
 
     useEffect(() => {
         openSkyService.getDeparturesByAirport(airport, time)
-            .then((data) => {
-                setData(data)
+            .then((departureData) => {
+                setDepartureData(departureData)
                 setError(null)
             })
             .catch((error)=>{
                 setError(error)
             })
     }, [airport, time])
-    console.log(time)
 
-    const items = data.map((item, idx) => {
-        return (
-            <ListItem
-                key={idx}
-            >
-                <ListItemText primary={
-                    item.estArrivalAirport
-                }/>
-            </ListItem>
-        )
-    })
+    useEffect(() => {
+        openSkyService.getArrivalsByAirport(airport, time)
+            .then((arrivalData) => {
+                setArrivalData(arrivalData)
+                setError(null)
+            })
+            .catch((error)=>{
+                setError(error)
+            })
+    }, [airport, time])
 
     return (
         <Fragment>
@@ -70,9 +71,12 @@ const Details = ({airport}) => {
                     <MenuItem value={30}>Thirty minutes</MenuItem>
                 </Select>
             </FormControl>
-            <List>
-                {items}
-            </List>
+            <Box m={2}>
+                <Typography color="primary" align='center' component='h3' variant='h5'>Departure</Typography>
+                <DetailsTable data={departureData}/>
+                <Typography color="primary" align='center' component='h3' variant='h5'>Arrival</Typography>
+                <DetailsTable data={arrivalData}/>
+            </Box>
         </Fragment>
 
     )

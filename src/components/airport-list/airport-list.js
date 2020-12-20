@@ -62,8 +62,8 @@ const AirportList = ({airports}) => {
                     // maxWidth='lg'
             >
                 <Container>
-                    <Typography>{name}</Typography>
-                    <Typography>{icao}</Typography>
+                    <Typography color='primary' align='center' component='h3' variant='h5'>{name}</Typography>
+                    <Typography color='primary' align='center' component='h3' variant='h5'>{icao}</Typography>
                 </Container>
                 <Details airport={icao}/>
                 <DialogActions>
