@@ -7,7 +7,8 @@ export default class OpenSkyService {
     }
 
     timeBegin = (timestamp) => {
-        return this.timeEnd() - 60*timestamp*150
+        return this.timeEnd() - 60*timestamp*70
+
     }
 
     getResource = async url => {

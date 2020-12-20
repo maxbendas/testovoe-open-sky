@@ -37,12 +37,12 @@ const AirportList = ({airports}) => {
         setOpenModal(false)
     }
 
-    const items = airports.map((item) => {
+    const items = airports.map((item, idx) => {
         return (
             <ListItem
                 onClick={() => onItemSelected(item)}
                 button
-                key={item.icao}
+                key={idx}
             >
                 <ListItemText primary={
                     item.name
@@ -59,13 +59,13 @@ const AirportList = ({airports}) => {
             <Dialog open={openModal}
                     onClose={onClose}
                     fullWidth={true}
-                    maxWidth='lg'
+                    // maxWidth='lg'
             >
                 <Container>
                     <Typography>{name}</Typography>
                     <Typography>{icao}</Typography>
                 </Container>
-                <Details airport={icao} time={10}/>
+                <Details airport={icao}/>
                 <DialogActions>
                     <Button
                         variant="contained"
