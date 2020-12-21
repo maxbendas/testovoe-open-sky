@@ -1,14 +1,16 @@
+import moment from "moment";
+
 export default class OpenSkyService {
 
     startUrl = 'https://opensky-network.org/api'
 
     timeEnd = () => {
-        return Math.floor(Date.now() / 1000)
+        return moment().unix();
+        // Math.floor(Date.now() / 1000)
     }
 
     timeBegin = (timestamp) => {
         return this.timeEnd() - 60*timestamp*70
-
     }
 
     getResource = async url => {

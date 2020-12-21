@@ -1,7 +1,5 @@
 import React from 'react';
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText/ListItemText";
-import List from "@material-ui/core/List";
+import moment from "moment";
 import {Paper} from "@material-ui/core";
 import TableContainer from "@material-ui/core/TableContainer";
 import Table from "@material-ui/core/Table";
@@ -11,7 +9,6 @@ import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 
 const DetailsTable = ({data}) => {
-
     return (
         <TableContainer component={Paper}>
             <Table size="small" aria-label="a dense table">
@@ -32,8 +29,12 @@ const DetailsTable = ({data}) => {
                             </TableCell>
                             <TableCell align="center">{item.estArrivalAirport}</TableCell>
                             <TableCell align="center">{item.estDepartureAirport}</TableCell>
-                            <TableCell align="center">{item.firstSeen}</TableCell>
-                            <TableCell align="center">{item.lastSeen}</TableCell>
+                            <TableCell align="center">
+                                {moment.unix(item.firstSeen).format("YYYY-MM-DD HH:mm")}
+                            </TableCell>
+                            <TableCell align="center">
+                                {moment.unix(item.lastSeen).format("YYYY-MM-DD HH:mm")}
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
